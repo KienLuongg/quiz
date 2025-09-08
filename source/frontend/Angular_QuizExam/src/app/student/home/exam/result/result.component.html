@@ -1,0 +1,42 @@
+<div class="main-body">
+    <div class="container container-result">
+        <!-- Result Section -->
+        <div class="result">
+            <h2><b>Result</b></h2>
+            <h2 class="violation" *ngIf="mark.warning" title="Violation: {{ mark.warning }}">
+                <span class="mdi mdi-alert-outline"></span>{{ mark.warning }}
+            </h2>
+        </div>
+        <hr class="line">
+
+        <div class="score">
+            <div class="row">
+                <div class="col-4">
+                    <div class="icon">
+                        <span class="mdi mdi-library-books"></span>
+                    </div>
+                    <p>{{ mark.subjectName }}</p>
+                </div>
+                <div class="col-4">
+                    <div class="icon-chart">
+                        <canvas id="doughnutChart" height="100px"></canvas>
+                        <div id="percentageLabel" ></div>
+                    </div>
+                    <p>{{ mark.score }}/{{ mark.maxScore }}</p>
+                </div>
+                <div class="col-4">
+                    <div class="icon">
+                        <span class="mdi mdi-timer-sand"></span>
+                    </div>
+                    <p>{{ timeTaken }}</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Progress Section with Horizontal Chart -->
+        <div class="progress-section">
+            <canvas id="progressChart"></canvas>
+        </div>
+    </div>
+</div>

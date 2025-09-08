@@ -1,0 +1,4 @@
+[[redirects]]
+  from = "/*"          # Chỉ định tất cả các URL sẽ được chuyển hướng.
+  to = "/index.html"   # Chuyển hướng tất cả các yêu cầu đến trang index.html.
+  status = 200          # Mã trạng thái HTTP trả về cho chuyển hướng (200 là OK).

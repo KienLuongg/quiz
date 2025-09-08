@@ -1,0 +1,154 @@
+<div class="content-wrapper" [ngClass]="{'content-wrapper-collapsed': admin.isSidebarCollapsed}">
+    <h4>{{ isClassIdValid() ? 'Student (No Class)' : (className + ' / Student') }}</h4>
+    <hr class="line">
+
+    <div class="bottom-actions">
+        <div>
+            <a class="button button-create" (click)="openPopupCreate()"><span class="mdi mdi-plus icon"></span>Create</a>
+            <a class="button button-create move" *ngIf="studentClassForm.userIds.length > 0" (click)="openPopupMoveToClass()"><span class="mdi mdi-arrow-right-bold-box icon"></span>Move Student to Class</a>
+        </div>
+        <div>
+            <a class="button button-excel" (click)="exportExcel()"><span class="mdi mdi-file-excel icon"></span>Export Excel</a>
+            <a class="button button-pdf" (click)="exportPDF()"><span class="mdi mdi-file-pdf icon"></span>Export PDF</a>
+        </div>
+    </div>
+
+    <table class="table" id="example">
+        <thead>
+            <tr>
+                <th style="width: 5%;">STT</th>
+                <th style="width: 23%;">Full Name</th>
+                <th style="width: 20%;">Email</th>
+                <th style="width: 15%;">Phone Number</th>
+                <th style="width: 12%;">Roll Portal</th>
+                <th style="width: 12%;">Roll Number</th>
+                <th style="width: 13%;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="isPopupMoveToClass" class="popup-container">
+    <div class="popup-content" (click)="$event.stopPropagation()">
+        <form class="form-popup" (ngSubmit)="updateStudentClass()">
+            <div class="popup-header">
+                <span>Move Student to Class</span>
+                <span class="close-icon" (click)="closePopup()">&times;</span>
+            </div>
+            <div class="search-container">
+                <div class="row">
+                    <div class="col-6">
+                        <select class="form-select" [(ngModel)]="studentClassForm.classId" name="classId">
+                            <option value=0>Student (No Class)</option>
+                            <option *ngFor="let data of filterClass" [value]="data.id">{{data.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" class="form-control search-input" [(ngModel)]="searchClass" (ngModelChange)="onSearchClassChange()"
+                            name="searchStudent" placeholder="Search Class"/>
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="popup-body">
+                <div class="form-popup">
+                    <div class="checkbox-group">
+                        <div class="checkbox-input" *ngFor="let student of getStudentsMovingToClass">
+                            <label>{{ student.userResponse.fullName }} - {{ student.userResponse.email }} - {{ student.rollNumber }}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="popup-footer">
+                <button type="submit" class="btn btn-primary button" [disabled]="studentClassForm.userIds.length == 0">Move</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div *ngIf="isPopupCreate || isPopupUpdate" class="popup-container">
+    <div class="popup-content popup-user" (click)="$event.stopPropagation()">
+        <form class="form-popup" (ngSubmit)="submitForm()">
+            <div class="popup-header">
+                <span>{{ popupFormTitle() }} Student</span>
+                <span class="close-icon" (click)="closePopup()">&times;</span>
+            </div>
+            <div class="popup-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="fullName" class="label-popup">Full Name:</label>
+                            <input type="text" class="form-control" [(ngModel)]="studentForm.userRequest.fullName" name="userRequest.fullName"
+                                placeholder="Enter Full Name">
+                            <span class="text-danger error" *ngIf="validationError['userRequest.fullName']">{{ validationError['userRequest.fullName'] }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="dob" class="label-popup">Date of Birth:</label>
+                            <input type="date" class="form-control" [(ngModel)]="studentForm.userRequest.dob" name="userRequest.dob">
+                            <span class="text-danger error" *ngIf="validationError['userRequest.dob']">{{ validationError['userRequest.dob'] }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender" class="label-popup">Gender:</label>
+                            <select class="form-select" [(ngModel)]="studentForm.userRequest.gender" name="userRequest.gender">
+                                <option value=1>Male</option>
+                                <option value=2>Female</option>
+                            </select>
+                            <span class="text-danger error" *ngIf="validationError['userRequest.gender']">{{ validationError['userRequest.gender'] }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="address" class="label-popup">Address:</label>
+                            <input type="text" class="form-control" [(ngModel)]="studentForm.userRequest.address" name="userRequest.address"
+                                placeholder="Enter Address">
+                            <span class="text-danger error" *ngIf="validationError['userRequest.address']">{{ validationError['userRequest.address'] }}</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="phoneNumber" class="label-popup">Phone Number:</label>
+                            <input type="text" class="form-control" [(ngModel)]="studentForm.userRequest.phoneNumber" name="userRequest.phoneNumber"
+                                placeholder="Enter Phone Number">
+                            <span class="text-danger error" *ngIf="validationError['userRequest.phoneNumber'] || validationError['phoneNumber']">
+                                {{ validationError['userRequest.phoneNumber'] || validationError['phoneNumber'] }}
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="label-popup">Email:</label>
+                            <input type="text" class="form-control" [(ngModel)]="studentForm.userRequest.email" name="userRequest.email"
+                                placeholder="Enter Email">
+                            <span class="text-danger error" *ngIf="validationError['userRequest.email'] || validationError['email']">
+                                {{ validationError['userRequest.email'] || validationError['email'] }}
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="rollPortal" class="label-popup">Roll Portal:</label>
+                            <input type="text" class="form-control" [(ngModel)]="studentForm.rollPortal" name="rollPortal"
+                                placeholder="Enter Roll Portal">
+                            <span class="text-danger error" *ngIf="validationError['rollPortal']">{{ validationError['rollPortal'] }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="rollNumber" class="label-popup">Roll Number:</label>
+                            <input type="text" class="form-control" [(ngModel)]="studentForm.rollNumber" name="rollNumber"
+                                placeholder="Enter Roll Number">
+                            <span class="text-danger error" *ngIf="validationError['rollNumber']">{{ validationError['rollNumber'] }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="popup-footer">
+                <button type="submit" class="btn btn-primary button">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Popup xác nhận -->
+<app-dialog-popup
+  [isVisible]="isPopupResetPassword || isPopupRemove || isPopupViewInactive || isPopupRestore"
+  [title]="dialogTitle"
+  [message]="dialogMessage"
+  [isConfirmationPopup]="isConfirmationPopup"
+  (confirm)="confirmAction()"
+  (close)="closePopup()">
+</app-dialog-popup>

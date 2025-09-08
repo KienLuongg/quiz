@@ -1,0 +1,47 @@
+<div class="content-wrapper" [ngClass]="{'content-wrapper-collapsed': admin.isSidebarCollapsed}">
+    <h4>Examination</h4>
+    <hr class="line">
+
+    <div class="bottom-actions row">
+        <div class="sem-container col-12 col-md-6">
+            <a class="btn btn-outline-light" *ngFor="let sem of semList" [ngClass]="{'active': selectedSem === sem.id}" (click)="setSelectedSem(sem.id)">{{ sem.name }}</a>
+        </div>
+        <div class="search-container col-12 col-md-6">
+            <input type="text" class="form-control" [(ngModel)]="searchExam" (input)="onSearch()"
+                placeholder="Search by subject or code" >
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        </div>
+    </div>
+    <div class="bottom-actions">
+        <div>
+            <a class="button button-create" (click)="navigateToCreateExam()"><span class="mdi mdi-plus icon"></span>Create</a>
+        </div>
+    </div>
+    
+    <div class="row">
+        <!-- Card 1 -->
+        <div class="custom-col mb-5" *ngFor="let exam of pagedExamList">
+            <div class="card" (click)="getExamDetail(exam.id)">
+                <div class="card-image">
+                    <img [src]="exam.subject.image ? (urlService.subjectImageUrl + exam.subject.image) : urlService.subjectDefaultImageUrl"
+                        alt="Default image for {{exam.subject.name}}">
+                </div>
+                <div class="card-content">
+                    <p class="mb-1"><strong>{{exam.name}}</strong></p>
+                    <p class="mb-1"><strong>Subject:</strong> {{exam.subject.name}}</p>
+                    <p><strong>Code:</strong> {{exam.code}}</p>
+                    <p style="font-size: x-small;">
+                        <i class="fa-regular fa-clock icon"></i> {{ convertDateFormat(exam.startTime) }} - {{ convertDateFormat(exam.endTime) }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nút phân trang -->
+    <div class="pagination" *ngIf="totalPages > 0">
+        <a class="paginate_button" [class.disabled]="currentPage === 1" (click)="previousPage()">Previous</a>
+        <span class="paginate_button" [class.current]="page === currentPage" *ngFor="let page of pages" (click)="goToPage(page)">{{ page }}</span>
+        <a class="paginate_button" [class.disabled]="currentPage === totalPages" (click)="nextPage()">Next</a>
+    </div>
+</div>

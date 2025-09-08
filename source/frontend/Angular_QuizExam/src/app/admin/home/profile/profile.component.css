@@ -1,0 +1,87 @@
+.profile {
+    margin: auto;
+    width: max-content;
+    min-height: 500px;
+    align-items: center;
+}
+
+.profile .profile-header {
+    padding: 0 30px;
+    text-align: center;
+}
+
+.profile .profile-header .profile-img {
+    width: 100px;
+}
+
+.profile .profile-header h3 {
+    margin: 10px 0;
+}
+
+.profile .btn {
+    margin: 3px;
+    width: auto;
+    font-size: 12px;
+    border-radius: 6px;
+    color: white;
+}
+
+.profile .button-default {
+    background-color: #aa1210;
+}
+
+.profile .button-default:hover {
+    background-color: #ca3633;
+}
+
+.profile .button-cancel {
+    background-color: #887f7f;
+}
+
+.profile .content {
+    width: 0;
+    overflow: hidden;
+    transition: width 0.5s ease-in-out;
+}
+
+.profile .content.show {
+    width: 330px;
+    padding: 10px;
+}
+
+.profile .content.update-form.show,
+.profile .content.change-password-form.show {
+    width: 430px;
+    padding: 10px;
+}
+
+.profile .content p {
+    margin-bottom: 0;
+    display: block;
+}
+
+.profile .content .form-group {
+    margin-bottom: 1.5rem;
+    margin-left: 4.5rem;
+}
+
+.profile .content .label-title {
+    font-weight: 600;
+}
+
+.profile .content .error {
+    font-size: 0.875rem;
+}
+
+.profile .content.change-password-form .position-relative {
+    position: relative;
+}
+
+.profile .content.change-password-form .fa-eye-slash,
+.profile .content.change-password-form .fa-eye {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}

@@ -1,0 +1,31 @@
+<div class="content-wrapper" [ngClass]="{'content-wrapper-collapsed': admin.isSidebarCollapsed}">
+    <h4>Semester</h4>
+    <hr class="line">
+
+    <div class="flex-container d-flex">
+        <div class="item-container">
+            <table class="table" id="example">
+            </table>
+            <form (ngSubmit)="submitForm()" class="form-section mt-3" [ngClass]="{'show': createMode || updateMode}" id="formSection">
+                <h3 class="form-title mb-3">{{ formTitle() }} Sem</h3>
+                <div class="row align-items-center mb-3">
+                    <label for="name" class="col-sm-2">Sem:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" [(ngModel)]="semForm.name" name="name" placeholder="Enter Sem Name">
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <span class="text-danger error col-sm-10" *ngIf="validationError['name']">{{ validationError['name'] }}</span>
+                </div>
+                <div class="form-button text-center">
+                    <button type="submit" class="btn btn-save">Save</button>
+                    <a (click)="hiddenForm()" class="btn btn-cancel">Cancel</a>
+                </div>
+            </form>
+        </div>
+        <div class="btn-action">
+            <div class="btn-add" (click)="showFormCreate()">
+                <i class="fa-solid fa-circle-plus"></i>
+            </div>
+        </div>
+    </div>
+</div>

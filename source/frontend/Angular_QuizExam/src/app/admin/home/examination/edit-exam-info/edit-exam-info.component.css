@@ -1,0 +1,50 @@
+.edit-exam-info {
+    margin-top: 50px;
+    padding: 10px;
+    max-width: 800px;
+    box-shadow: 0 2px 4px rgba(0.1, 0.1, 0.1, 0.2);
+    border-radius: 6px;
+    background-color: var(--color-card);
+    color: var(--color-text);
+    transition: all 0.9s ease;
+}
+
+.edit-exam-info .title h3 {
+    font-weight: bold;
+}
+
+.edit-exam-info .content {
+    padding: 0 20px 20px 20px;
+}
+
+.edit-exam-info .content label {
+    font-weight: bold;
+    padding-bottom: 3px;
+    padding-top: 30px;
+}
+
+.edit-exam-info .content .form-control, 
+.edit-exam-info .content .form-select {
+    width: 100%;
+    min-height: 35px;
+    background-color: var(--color-input-exam);
+    color: var(--color-text);
+    border: none;
+    border-radius: 5px;
+}
+
+.edit-exam-info .content .form-select {
+    text-overflow: ellipsis;
+}
+
+.edit-exam-info .content .error {
+    font-size: 0.875rem;
+}
+
+.edit-exam-info .content .button-next {
+    width: 25%;
+    height: 38px;
+    font-size: 13px;
+    background-color: #aa1210;
+    color: white;
+}

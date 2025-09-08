@@ -1,0 +1,23 @@
+name: Spring Boot CI
+
+on:
+  push:
+    branches:
+      - main  # Kích hoạt workflow khi có sự kiện push vào nhánh 'main'
+
+jobs:
+  build:
+    runs-on: windows-latest  # Chạy trên môi trường Windows mới nhất
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2  # Checkout mã nguồn từ kho GitHub
+
+      - name: Set up environment variables for DB connection
+        run: |
+          echo "DB_URL=${{ secrets.DB_URL }}" >> $env:GITHUB_ENV
+          echo "DB_USER=${{ secrets.DB_USER }}" >> $env:GITHUB_ENV
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $env:GITHUB_ENV
+
+      - name: Build and test the application
+        run: .\mvnw clean test  # Sử dụng Maven wrapper để build và kiểm tra ứng dụng

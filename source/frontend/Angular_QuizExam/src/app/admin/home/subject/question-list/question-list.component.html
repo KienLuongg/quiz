@@ -1,0 +1,56 @@
+<div class="content-wrapper" [ngClass]="{'content-wrapper-collapsed': admin.isSidebarCollapsed}">
+    <h4>{{ subject.name }} / Question List</h4>
+    <hr class="line">
+    <div class="bottom-actions">
+        <div>
+            <a class="button button-create" (click)="navigateToAddQuestion()"><span class="mdi mdi-plus icon"></span>Create</a>
+        </div>
+        <div>
+            <a class="button button-pdf" (click)="exportPDF()"><span class="mdi mdi-file-pdf icon"></span>Export PDF</a>
+        </div>
+    </div>
+    <table class="table" id="example">
+        <thead>
+            <tr>
+                <th style="width: 10%;">STT</th>
+                <th style="width: 50%;">Question</th>
+                <th style="width: 20%;">Chapter</th>
+                <th style="width: 10%;">Level</th>
+                <th style="width: 10%;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="isPopupDetail" class="popup-container">
+    <div class="popup-content" (click)="$event.stopPropagation()">
+        <div class="popup-header">
+            <span>Question Detail</span>
+            <span class="close-icon" (click)="closePopup()">&times;</span>
+        </div>
+        <div class="popup-body">
+            <div class="form-popup">
+                <div class="checkbox-group">
+                    <p><b>Content: </b><span [innerHTML]="transformTextWithNewlines(question.content)"></span></p>
+                    <div class="checkbox-input" *ngFor="let answers of question.answers; let i = index">
+                        <label><b>{{ getOptionLabel(i) }}. </b>{{ answers.content }}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="popup-footer">
+        </div>
+    </div>
+</div>
+
+<!-- Popup xác nhận -->
+<app-dialog-popup
+  [isVisible]="isPopupDelete"
+  [title]="dialogTitle"
+  [message]="dialogMessage"
+  [isConfirmationPopup]="isConfirmationPopup"
+  (confirm)="confirmAction()"
+  (close)="closePopup()">
+</app-dialog-popup>

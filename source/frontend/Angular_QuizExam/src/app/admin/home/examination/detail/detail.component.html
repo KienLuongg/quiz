@@ -1,0 +1,90 @@
+<div class="content-wrapper" [ngClass]="{'content-wrapper-collapsed': admin.isSidebarCollapsed}">
+    <h4>Examination</h4>
+    <hr class="line">
+
+    <app-wizard-step *ngIf="examComponent.step && exam.type == 0" [steps]="examComponent.autoGenerateExamSteps">
+    </app-wizard-step>
+
+    <app-wizard-step *ngIf="examComponent.step && exam.type == 1" [steps]="examComponent.manualQuestionSelectionSteps">
+    </app-wizard-step>
+
+    <div class="bottom-actions">
+        <div>
+            <a class="button button-pdf" (click)="navigateToExamList()"><span class="mdi mdi-arrow-left-thick icon"></span>Back</a>
+        </div>
+        <div>
+            <a class="button button-pdf" (click)="exportPDF()"><span class="mdi mdi-file-pdf icon"></span>Export PDF</a>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- Exam details section -->
+        <div class="row exam-info">
+            <!-- Centered title with edit icon -->
+            <div class="exam-header">
+                <h4 class="text-center flex-grow-1">Examination Info</h4>
+                <span class="mdi mdi-pencil-box-outline" title="Edit Examination Info" (click)="navigateToEditExam()"></span>
+                <span class="mdi mdi-account-box-outline" title="Exam participants" (click)="navigateToExamParticipants()"></span>
+            </div>
+
+            <!-- Exam information with two columns -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="d-flex justify-content-between mb-3">
+                        <p class="label">Name:</p>
+                        <p class="content">{{ exam.name }}</p>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <p class="label">Subject:</p>
+                        <p class="content">{{ exam.subject.name }}</p>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <p class="label">Start Time:</p>
+                        <p class="content">{{ convertDateFormat(exam.startTime) }}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="d-flex justify-content-between mb-3">
+                        <p class="label">Code:</p>
+                        <p class="content">{{ exam.code }}</p>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <p class="label">Duration:</p>
+                        <p class="content">{{ exam.duration }}</p>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <p class="label">End Time:</p>
+                        <p class="content">{{ convertDateFormat(exam.endTime) }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-section">
+            <div class="header text-end" *ngIf="isTimeValidToUpdateQuestion()">
+                <span class="mdi mdi-pencil-box-outline" title="Edit Questions" (click)="navigateToUpdateExamQuestions()"></span>
+            </div>
+            <div class="content" *ngFor="let question of exam.questionRecordResponses; let i = index">
+                <h6><b>Question {{ i + 1 }}: </b><span [innerHTML]="transformTextWithNewlines(question.content)"></span></h6>
+
+                <div *ngIf="question.image">
+                    <img [src]="urlService.questionImageUrl + question.image" alt="Question Image">
+                </div>
+
+                <ng-container *ngIf="question.type === 1; else multipleAnswers">
+                    <div class="answer-option" *ngFor="let answer of question.answerRecords; let j = index">
+                        <input type="radio" [name]="question.id" [id]="answer.id">
+                        <label [for]="answer.id">{{ answer.content }}</label>
+                    </div>
+                </ng-container>
+
+                <ng-template #multipleAnswers>
+                    <div class="answer-option" *ngFor="let answer of question.answerRecords; let j = index">
+                        <input type="checkbox" [name]="question.id" [id]="answer.id">
+                        <label [for]="answer.id">{{ answer.content }}</label>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="row bs-wizard">
+    <div class="col-xs-3 bs-wizard-step" *ngFor="let step of steps; let i = index" [ngClass]="step.status">
+        <div class="text-center bs-wizard-stepnum">{{ 'Step ' + step.stepNumber }}</div>
+        <div class="progress">
+            <div class="progress-bar"></div>
+        </div>
+        <a href="#" class="bs-wizard-dot"></a>
+        <div class="bs-wizard-info text-center">{{ step.title }}</div>
+    </div>
+</div>

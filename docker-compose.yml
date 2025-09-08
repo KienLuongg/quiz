@@ -1,0 +1,114 @@
+version: "3.8"
+
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: quizexam-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: lht@39412990
+      MYSQL_DATABASE: quiz
+      MYSQL_USER: quizuser
+      MYSQL_PASSWORD: quizpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/db.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - quizexam-network
+    command: --default-authentication-plugin=mysql_native_password
+
+  # Backend Spring Boot
+  backend:
+    build:
+      context: ./source/backend/QuizExam_Student
+      dockerfile: Dockerfile
+    container_name: quizexam-backend
+    restart: unless-stopped
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/quiz
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: lht@39412990
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+      JWT_EXPIRATION: 604800000
+      JWT_SECRET: "secret"
+      UPLOADS_SUBJECT: /app/uploads/img-subject
+      UPLOADS_QUESTION: /app/uploads/img-question
+      SPRING_WEB_RESOURCES_STATIC_LOCATIONS: classpath:/static/, file:/app/uploads/
+      SPRING_MVC_STATIC_PATH_PATTERN: /uploads/**
+    ports:
+      - "8080:8080"
+    volumes:
+      - backend_uploads:/app/uploads
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - quizexam-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Frontend Angular
+  frontend:
+    build:
+      context: ./source/frontend/Angular_QuizExam
+      dockerfile: Dockerfile
+    container_name: quizexam-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - quizexam-network
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--tries=1",
+          "--spider",
+          "http://localhost:80/health",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Nginx Reverse Proxy (Optional - for production)
+  nginx-proxy:
+    image: nginx:alpine
+    container_name: quizexam-proxy
+    restart: unless-stopped
+    ports:
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - quizexam-network
+    profiles:
+      - production
+
+volumes:
+  mysql_data:
+    driver: local
+  backend_uploads:
+    driver: local
+
+networks:
+  quizexam-network:
+    driver: bridge

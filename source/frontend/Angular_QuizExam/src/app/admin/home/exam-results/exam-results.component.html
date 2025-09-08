@@ -1,0 +1,27 @@
+<div class="content-wrapper" [ngClass]="{'content-wrapper-collapsed': admin.isSidebarCollapsed}">
+    <h4>Exam Results / {{ subjectName }}</h4>
+    <hr class="line">
+
+    <div class="bottom-actions">
+        <div class="col-3">
+            <a class="button button-create" (click)="navigateDashboard()"><span class="mdi mdi-arrow-left-thick icon"></span>Back</a>
+        </div>
+    </div>
+
+    <table class="table" id="example">
+        <thead>
+            <tr>
+                <th style="width: 10%;">STT</th>
+                <th style="width: 25%;">Full Name</th>
+                <th style="width: 15%;">Roll Portal</th>
+                <th style="width: 15%;">Roll Number</th>
+                <th style="width: 15%;">Status</th>
+                <th style="width: 10%;">Score</th>
+                <th style="width: 10%;">Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Add more rows as needed -->
+        </tbody>
+    </table>
+</div>

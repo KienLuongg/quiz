@@ -1,0 +1,7 @@
+.flex-container .item-container .form-section.show {
+    height: 233px;
+}
+
+.flex-container .item-container .form-section.error-active {
+    height: auto; /* Tăng chiều cao khi có lỗi để chứa thông báo lỗi */
+}

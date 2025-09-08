@@ -1,0 +1,110 @@
+<div class="content-wrapper" [ngClass]="{'content-wrapper-collapsed': admin.isSidebarCollapsed}">
+    <h4>{{ subject.name }} / Add new Question</h4>
+    <hr class="line">
+    <form class="d-flex" (ngSubmit)="saveQuestions()">
+        <div id="question-forms">
+            <div *ngFor="let question of questionForms; let i = index" class="question-form" [id]="'question-form-' + i">
+                <div class="mb-4 mt-2"><b>Question {{ i + 1 }}:</b></div>
+                <div class="form-row">
+                    <div class="form-group-row form-select-chapter col me-3">
+                        <label for="chapter" class="label-fix">Chapter:</label>
+                        <button type="button" class="form-select button-chapter" (click)="openPopupChapter(i)">
+                            {{ getSelectedChaptersNames(question) }}
+                        </button>
+                    </div>
+                    <div class="form-group-row form-select-level col me-0">
+                        <label for="level">Level:</label>
+                        <select class="form-select select-level" [(ngModel)]="question.levelId" name="question.levelId{{i}}">
+                            <option *ngFor="let level of levelList" [value]="level.id">{{ level.name + ' - (' + level.point + ' point)' }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group-row">
+                    <label for="question" class="label-fix">Question:</label>
+                    <textarea class="form-control" [(ngModel)]="question.content" name="question.content{{i}}" rows="3" style="flex-grow: 1" placeholder="Enter Question {{i + 1}}"></textarea>
+                </div>
+                <div class="text-danger content-error" *ngIf="validationError['question[' + i + '].content']">{{ validationError['question[' + i + '].content'] }}</div>
+
+                <div class="form-group form-image">
+                    <div class="img-preview mt-3 mb-3" [ngClass]="{'hidden-border': question.file}">
+                        <input type="file" name="file{{i}}" class="form-control-file" accept="image/*" (change)="chooseImage($event, i)" />
+                        <button *ngIf="!question.file" class="choose-file-btn" type="button">Choose file</button>
+                        <img id="image-question{{i}}" src="#" alt="Image Question" style="display:none;" />
+                
+                        <!-- Dấu X để xóa ảnh -->
+                        <span *ngIf="question.file" class="remove-image" (click)="removeImage(i)"><b>&times;</b></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="answers-container">
+                        <div *ngFor="let answer of question.answers; let j = index" class="mb-2">
+                            <div class="input-group">
+                                <div class="input-group-text">
+                                    <input type="checkbox" [(ngModel)]="answer.isCorrect" name="answer.isCorrect{{i}}-{{j}}" />
+                                </div>
+                                <input type="text" [(ngModel)]="answer.content" name="answer.content{{i}}-{{j}}" class="form-control" placeholder="Enter Answer {{j + 1}}" />
+                                <span class="remove-answer" (click)="openPopupDeleteAnswer(i, j)">&times;</span>
+                            </div>
+                            <div class="text-danger answer-error" *ngIf="validationError['question[' + i + '].answer[' + j + '].content']">{{ validationError['question[' + i + '].answer[' + j + '].content'] }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-3 mb-2">
+                    <button type="button" class="add-answer" (click)="addAnswer(i)">
+                        <span class="mdi mdi-plus icon-button"></span> Another choice
+                    </button>
+                    <button type="button" class="remove-question" style="float: right;" (click)="openPopupDeleteQuestion(i)">
+                        <span class="mdi mdi-delete-forever icon-button"></span> Remove Question
+                    </button>
+                </div>
+
+                <div *ngIf="isPopupChapter[i]" class="popup-container">
+                    <div class="popup-content" (click)="$event.stopPropagation()">
+                        <div class="popup-header">
+                            <span>Select Chapter</span>
+                            <span class="close-icon" (click)="closePopupChapter()">&times;</span>
+                        </div>
+                        <div class="search-container">
+                            <input type="text" class="form-control search-input" [(ngModel)]="searchChapter" (ngModelChange)="onSearchChange()"
+                                name="searchChapter{{i}}" placeholder="Search Chapters"/>
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        </div>
+                        <div class="popup-body">
+                            <div class="form-popup">
+                                <div class="checkbox-group">
+                                    <div class="checkbox-input" *ngFor="let chapter of filterChapters">
+                                        <input type="checkbox" (change)="toggleChapterSelection(chapter.id, $event)"
+                                            [checked]="questionForms[popupChapterIndex].chapters.includes(chapter.id)"
+                                            id="chapter{{chapter.id}}-{{popupChapterIndex}}" />
+                                        <label for="chapter{{chapter.id}}-{{popupChapterIndex}}">{{ chapter.name }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="popup-footer">
+                            <button type="button" class="btn btn-primary button" (click)="confirmChapterSelection()">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-action">
+            <button type="button" class="mdi mdi-plus-circle-outline icon-action" title="Add Question" (click)="addQuestionForm()"></button>
+            <button type="submit" class="mdi mdi-checkbox-marked-circle-outline icon-action" title="Save"></button>
+            <button type="button" class="mdi mdi-close-circle-outline icon-action" title="Cancel" (click)="openPopupConfirmCancel()"></button>
+        </div>
+    </form>
+</div>
+
+<!-- Popup xác nhận -->
+<app-dialog-popup
+  [isVisible]="isPopupDeleteQuestion || isPopupDeleteAnswer || isPopupCancel"
+  [title]="dialogTitle"
+  [message]="dialogMessage"
+  [isConfirmationPopup]="isConfirmationPopup"
+  (confirm)="confirmAction()"
+  (close)="closePopupDialog()">
+</app-dialog-popup>

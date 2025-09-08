@@ -1,0 +1,86 @@
+.order-card {
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.order-card h6,
+.order-card h2 {
+    margin: 0;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--color-card);
+    color: var(--color-text);
+    transition: all 0.9s ease;
+}
+
+.card-body {
+    align-content: center;
+}
+
+.chart-container {
+    margin-bottom: 30px;
+    min-height: 350px;
+}
+
+.fas, .feather {
+    font-size: 16px;
+}
+
+.card .card-header .title {
+    margin: 0;
+}
+
+.card .card-body .form-group-row {
+    display: flex;
+    align-items: center;
+}
+
+.card .card-body .form-group-row .select-field {
+    width: 200%;
+    cursor: pointer;
+}
+
+.card .card-body .search-container {
+    position: relative;
+    margin-left: auto;
+}
+
+.card .card-body .search-container .search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+.card .tab-content .table tr th,
+.card .tab-content .table tr td {
+    background-color: var(--color-card);
+    color: var(--color-text);
+    transition: all 0.9s ease;
+}
+
+.card .card-body.nav-fill .form-group-row {
+    width: 86%;
+}
+
+.card .card-body.nav-fill label {
+    flex-shrink: 0;
+}
+
+.card .card-body.nav-fill .form-select {
+    text-overflow: ellipsis;
+}
+
+.card .card-body.nav-fill .search-filter-column {
+    border-right: #888 1px solid;
+}
+
+.card .table tbody tr {
+    cursor: pointer;
+}

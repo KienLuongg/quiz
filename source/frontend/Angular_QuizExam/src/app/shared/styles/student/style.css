@@ -1,0 +1,14 @@
+.main-body {
+    min-height: 80vh;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    transition: all 0.9s ease;
+}
+
+.line {
+    margin-top: 0;
+}
+
+.container {
+    padding: 30px;
+}

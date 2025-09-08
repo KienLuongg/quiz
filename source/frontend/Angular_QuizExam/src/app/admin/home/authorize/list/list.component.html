@@ -1,0 +1,17 @@
+<div class="content-wrapper" [ngClass]="{'content-wrapper-collapsed': admin.isSidebarCollapsed}">
+    <h4>Authorize</h4>
+    <hr class="line">
+
+    <div class="row">
+        <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mb-5" *ngFor="let role of roleList">
+            <div class="card" (click)="getPermission(role.id)">
+                <div class="card-image">
+                    <img src="https://static.thenounproject.com/png/250405-200.png" alt="User Thumbnail">
+                </div>
+                <div class="card-content">
+                    <span class="card-title">{{role.name}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

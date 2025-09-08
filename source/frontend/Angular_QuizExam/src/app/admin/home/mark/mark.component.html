@@ -1,0 +1,29 @@
+<div class="content-wrapper" [ngClass]="{'content-wrapper-collapsed': admin.isSidebarCollapsed}">
+    <h4>Marks / {{ student.userResponse.fullName }} - {{ student.rollPortal }}</h4>
+    <hr class="line">
+    <div class="bottom-actions">
+        <div class="sem-container">
+            <a class="btn btn-outline-light" *ngFor="let s of semList" [ngClass]="{'active': selectedSem == s.id}" (click)="setSelectedSem(s.id)">{{ s.name }}</a>
+        </div>
+    </div>
+    <div class="bottom-actions">
+        <div>
+            <a class="button button-create" (click)="navigateToStudentList()"><span class="mdi mdi-arrow-left-thick icon"></span>Back</a>
+        </div>
+    </div>
+    <table class="table" id="example">
+        <thead>
+            <tr>
+                <th style="width: 5%;">STT</th>
+                <th style="width: 30%;">Subject</th>
+                <th style="width: 10%;">Mark</th>
+                <th style="width: 15%;">Max Mark</th>
+                <th style="width: 10%;">Rate</th>
+                <th style="width: 15%;">Violations</th>
+                <th style="width: 15%;">Result</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>

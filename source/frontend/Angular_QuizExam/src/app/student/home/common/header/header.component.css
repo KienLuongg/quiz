@@ -1,0 +1,141 @@
+.navbar {
+    position: sticky;
+    top: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    transition: all 0.9s ease;
+    z-index: 1000;
+}
+
+.navbar-nav {
+    margin-left: 20px;
+}
+
+.navbar-brand img {
+    height: 40px;
+    margin-left: 14px;
+}
+
+.navbar-nav .nav-item .nav-link {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--color-text);
+    transition: color 0.9s ease;
+}
+
+.navbar-nav .nav-item .nav-link.active {
+    color: #000;
+    background-color: #e6e6e6;
+    border-radius: 8px;
+    padding: 5px 8px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-right: 14px;
+}
+
+.user-info i {
+    font-size: 24px;
+    margin-left: 8px;
+}
+
+.user-info:hover {
+    cursor: pointer;
+}
+
+/* menu-user-dropdown */
+.d-flex .menu {
+    position: absolute;
+    top: 60px;
+    right: -10px;
+    background: var(--color-menu);
+    width: 200px;
+    box-sizing: 0 5px 25px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    transition: 0.5s;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.d-flex .menu.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.d-flex .menu::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    right: 28px;
+    width: 20px;
+    height: 20px;
+    background: var(--color-menu);
+    transition: 0.5s;
+    transform: rotate(45deg);
+}
+
+.d-flex .menu ul li {
+    list-style: none;
+    padding: 16px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+}
+
+.d-flex .menu ul li img {
+    max-width: 20px;
+    margin-right: 10px;
+    opacity: 0.5;
+    transition: 0.5s;
+}
+
+.d-flex .menu ul li:hover img {
+    opacity: 1;
+}
+
+.d-flex .menu ul li a {
+    display: inline-block;
+    text-decoration: none;
+    color: var(--color-text);
+    font-weight: 500;
+    transition: 0.5s;
+}
+
+.d-flex .menu ul li i {
+    width: 25px;
+    font-size: 25px;
+    margin-right: 10px;
+    color: var(--color-text);
+    transition: 0.5s;
+}
+
+.d-flex .menu ul li:hover a {
+    color: #ff5d94;
+}
+
+@media (min-width: 820px) {
+    .navbar-expand-lg .navbar-nav {
+        flex-direction: row;
+    }
+
+    .navbar-expand-lg .navbar-collapse {
+        display: flex !important;
+        flex-basis: auto;
+    }
+}
+
+@media (min-width: 400px) {
+    .r-5 {
+        position: absolute;
+        right: 50px;
+        display: flex !important;
+    }
+}
+
+.r-5:not(.show) {
+    display: none;
+}

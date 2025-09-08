@@ -1,0 +1,125 @@
+.question-container {
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    background-color: var(--color-card);
+    color: var(--color-text);
+    transition: all 0.9s ease;
+}
+
+.answer-options {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    margin-top: 8px;
+}
+
+.answer-options input[type="radio"],
+.answer-options input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    accent-color: black;
+    margin-right: 8px;
+    /* Customize color for radio/checkbox */
+}
+
+.question-section {
+    margin-bottom: 20px;
+}
+
+.question-section img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    max-height: 250px;
+}
+
+
+/*sidebar */
+.sidebar-container {
+    position: sticky;
+    top: 0;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    background-color: var(--color-card);
+    color: var(--color-text);
+    transition: all 0.9s ease;
+}
+
+.sidebar-container h4,
+p {
+    text-align: center;
+}
+
+.count {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.count .summary-count {
+    border: 1px solid;
+    border-radius: 3px;
+    padding: 3px 20px;
+}
+
+.calendar table {
+    width: 100%;
+    /* Đặt chiều rộng của bảng vừa với phần sidebar */
+    border-collapse: separate;
+    /* Tách biệt các ô */
+    border-spacing: 5px;
+    /* Khoảng cách giữa các ô */
+}
+
+.calendar td {
+    width: 40px;
+    /* Điều chỉnh chiều rộng của mỗi ô */
+    height: 40px;
+    /* Điều chỉnh chiều cao của mỗi ô */
+    text-align: center;
+    /* Căn giữa theo chiều ngang */
+    vertical-align: middle;
+    /* Căn giữa theo chiều dọc */
+    border: 1px solid #ddd;
+    /* Đường viền giữa các ô */
+    font-size: 14px;
+    /* Kích thước chữ nhỏ hơn */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    /* Hiệu ứng đổ bóng cho các ô */
+    padding: 5px;
+}
+
+.question-td {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ddd;
+    text-align: center;
+    line-height: 38px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+    margin: 0 8px 10px 8px;
+    background-color: var(--color-card);
+    color: var(--color-text);
+    transition: all 0.9s ease;
+}
+
+.btn-success {
+    background-color: #1E90FF;
+    border-color: #0d6efd;
+    color: white;
+}
+
+
+.submit-btn {
+    background-color: #d8202a;
+    color: white;
+    border: none;
+}
+
+.submit-btn:hover {
+    background-color: #a51922;
+    color: white;
+}

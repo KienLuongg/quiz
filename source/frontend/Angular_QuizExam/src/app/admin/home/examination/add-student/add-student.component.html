@@ -1,0 +1,113 @@
+<div class="content-wrapper" [ngClass]="{'content-wrapper-collapsed': admin.isSidebarCollapsed}">
+    <h4>{{ titlePage() }}</h4>
+    <hr class="line">
+
+    <app-wizard-step *ngIf="examComponent.step && exam.type == 0" [steps]="examComponent.autoGenerateExamSteps">
+    </app-wizard-step>
+
+    <app-wizard-step *ngIf="examComponent.step && exam.type == 1" [steps]="examComponent.manualQuestionSelectionSteps">
+    </app-wizard-step>
+
+    <div class="bottom-actions" *ngIf="isTimeValidToSave()">
+        <div>
+            <a class="button button-create me-2" *ngIf="!examComponent.step" (click)="navigateExamDetail()">
+                <span class="mdi mdi-arrow-left-thick icon"></span>Back
+            </a>
+            <a class="button button-create" (click)="openStudentPopup()">
+                <span class="mdi mdi-plus icon"></span>Add Student
+            </a>
+        </div>
+        <div>
+            <a class="button button-create" (click)="updateMark()">
+                <span *ngIf="!examComponent.step" class="mdi mdi-content-save-all icon"></span>
+                {{ examComponent.step ? 'Next' : 'Save' }}
+                <span *ngIf="examComponent.step" class="mdi mdi-arrow-right-thick icon-right"></span>
+            </a>
+        </div>
+    </div>
+
+    <div class="bottom-actions" *ngIf="!isTimeValidToSave()">
+        <div class="col-3">
+            <a class="button button-create" (click)="navigateExamDetail()"><span class="mdi mdi-arrow-left-thick icon"></span>Back</a>
+        </div>
+        <div class="col-9 text-end">
+            <span class="text-danger">
+                The end time must be at least {{ exam.duration + 30 }} minutes later than the current time
+                (exam duration + 30 minutes) to allow editing.
+            </span>
+        </div>
+    </div>
+
+    <table class="table" id="example">
+        <thead>
+            <tr>
+                <th style="width: 10%;">STT</th>
+                <th style="width: 30%;">Full Name</th>
+                <th style="width: 16%;">Roll Portal</th>
+                <th style="width: 16%;">Roll Number</th>
+                <th style="width: 15%;">Status</th>
+                <th style="width: 8%;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Add more rows as needed -->
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="isPopupAddStudent" class="popup-container">
+    <div class="popup-content" (click)="$event.stopPropagation()">
+        <div class="popup-header">
+            <span>Add Student</span>
+            <span class="close-icon" (click)="closePopup()">&times;</span>
+        </div>
+        <div class="search-container">
+            <div class="row">
+                <div class="col-6">
+                    <select class="form-select" [(ngModel)]="classId" name="classId" (change)="filterStudentsByClass()">
+                        <option value=0>Student (No Class)</option>
+                        <option *ngFor="let data of filterClass" [value]="data.id">{{data.name}}</option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <input type="text" class="form-control search-input" [(ngModel)]="searchClass" (ngModelChange)="onSearchClassChange()"
+                        name="searchStudent" placeholder="Search Class"/>
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                </div>
+            </div>
+        </div>
+        <div class="search-container">
+            <input type="text" class="form-control search-input" [(ngModel)]="searchStudent" (ngModelChange)="onSearchStudentsChange()"
+                name="searchStudent" placeholder="Search Students"/>
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        </div>
+        <div class="popup-body popup-add">
+            <div class="form-popup">
+                <div class="checkbox-group">
+                    <div class="checkbox-input" *ngIf=" searchStudent == '' ">
+                        <input type="checkbox" id="student" [checked]="selectAllStatus[classId]" (change)="toggleSelectAll($event)"/>
+                        <label for="student" >Select All</label>
+                    </div>
+                    <div class="checkbox-input" *ngFor="let student of filterStudents">
+                        <input type="checkbox" (change)="handleCheckboxChange(student.userResponse.id, $event)"
+                            [checked]="isChecked(student.userResponse.id)"
+                            id="student{{student.userResponse.id}}"/>
+                        <label for="student{{student.userResponse.id}}">{{ student.userResponse.fullName }} - {{ student.userResponse.email }} - {{ student.rollNumber }}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="popup-footer">
+            <button type="button" class="btn btn-primary button" (click)="saveSelectedStudents()">OK</button>
+        </div>
+    </div>
+</div>
+
+<app-dialog-popup
+  [isVisible]="isPopupDelete"
+  [title]="dialogTitle"
+  [message]="dialogMessage"
+  [isConfirmationPopup]="isConfirmationPopup"
+  (confirm)="deleteStudent()"
+  (close)="closePopup()">
+</app-dialog-popup>

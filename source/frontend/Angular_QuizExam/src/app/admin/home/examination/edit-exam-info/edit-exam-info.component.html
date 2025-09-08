@@ -1,0 +1,49 @@
+<div class="content-wrapper" [ngClass]="{'content-wrapper-collapsed': admin.isSidebarCollapsed}">
+    <h4>Examination</h4>
+    <hr class="line">
+
+    <div class="container edit-exam-info">
+        <div class="title">
+            <h3 class="text-center mt-4">Edit Examination Info</h3>
+        </div>
+        <div class="content">
+            <form (ngSubmit)="saveExam()">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" [(ngModel)]="examForm.name" name="name">
+                            <div class="text-danger error" *ngIf="validationError['name']">{{ validationError['name'] }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="duration">Duration (minutes)</label>
+                            <input type="number" class="form-control" [(ngModel)]="examForm.duration" name="duration">
+                            <div class="text-danger error" *ngIf="validationError['duration']">{{ validationError['duration'] }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" *ngIf="isTimeValidToSave()">
+                        <div class="form-group">
+                            <label for="startTime">Start Time</label>
+                            <input type="datetime-local" class="form-control" [(ngModel)]="examForm.startTime" name="startTime">
+                            <div class="text-danger error" *ngIf="validationError['startTime']">{{ validationError['startTime'] }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="endTime">End Time</label>
+                            <input type="datetime-local" class="form-control" [(ngModel)]="examForm.endTime" name="endTime">
+                            <div class="text-danger error" *ngIf="validationError['endTime']">{{ validationError['endTime'] }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group text-center mt-4">
+                    <button type="submit" class="btn button-next">Next</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

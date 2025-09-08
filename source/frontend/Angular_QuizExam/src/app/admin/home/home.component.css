@@ -1,0 +1,271 @@
+/* Header */
+
+.header {
+    position: fixed;
+    left: 150px;
+    right: 0;
+    color: var(--color-text);
+    background-color: var(--color-sidebar);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color-switch);
+    z-index: 1000;
+    height: 60px;
+    transition: all 0.9s ease;
+}
+
+.header-collapsed {
+    left: 30px;
+}
+
+.content-wrapper {
+    padding: 20px;
+    margin: 0 0 60px 120px;
+    min-height: 80vh;
+    overflow-x: hidden;
+    transition: all 0.9s ease;
+}
+
+.content-wrapper-collapsed{
+    margin-left: 30px;
+}
+
+.user-section {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.user-section .icon {
+    height: 45px;
+    font-size: 45px;
+    margin-left: 10px;
+    /* Khoảng cách giữa icon và thông tin user */
+    margin-bottom: 24px;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    /* Thông tin user hiển thị theo cột (tên trên, role dưới) */
+    align-items: flex-end;
+    /* Căn phải cho thông tin */
+}
+
+.user-name {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 2px;
+    /* Khoảng cách giữa tên và role */
+}
+
+.user-role {
+    font-size: 12px;
+    color: #888;
+}
+
+
+
+
+/* Sidebar */
+
+.sidebar {
+    width: 150px;
+    background-color: var(--color-sidebar);
+    border-right: 1px solid var(--color-switch);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: block;
+    flex-direction: column;
+    transition: all 0.9s ease;
+}
+
+.sidebar .block-wrapper {
+    height: 60px;
+    text-align: center;
+    align-content: center;
+    border-bottom: 1px solid var(--color-switch);
+    transition: all 0.9s ease;
+}
+
+.sidebar .block-image {
+    width: 110px;
+}
+
+.sidebar .sidebar-link span {
+    margin-left: 8px;
+}
+
+.sidebar .sidebar-link {
+    display: block;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 15px 15px;
+    color: var(--color-text);
+    transition: all 0.9s ease;
+}
+
+.sidebar .sidebar-link:hover {
+    background-color: var(--color-sidebar-hover);
+}
+
+.sidebar .active {
+    background-color: var(--color-sidebar-active);
+    transition: background-color 0.9s ease, color 0.9s ease;
+}
+
+.sidebar .sidebar-link .icon {
+    font-size: 14px;
+}
+
+.sidebar .link-text {
+    font-size: 13px;
+}
+
+
+/* sidebar thu nhỏ */
+.sidebar-collapsed {
+    width: 30px;
+    overflow: hidden;
+    transition: all 0.9s ease;
+}
+
+.sidebar-collapsed .sidebar-link {
+    top: 59px;
+    padding: 15px 7px;
+    position: relative;
+    text-align: center;
+    color: var(--color-text);
+    border-top: 1px solid var(--color-switch);
+    transition: all 0.9s ease;
+}
+
+.sidebar-collapsed .sidebar-link .icon {
+    margin: 0;
+}
+
+.sidebar-collapsed .block-wrapper {
+    display: none;
+}
+
+.sidebar-collapsed .sidebar-link .link-text {
+    display: none;
+}
+
+/* Nút toggle cho sidebar */
+.sidebar-toggle {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+/* Icon bên trong nút toggle */
+.sidebar-toggle span {
+    font-size: 20px;
+    color: var(--color-text);
+    transition: all 0.9s ease;
+}
+
+/* Khi sidebar thu nhỏ */
+.sidebar-collapsed .sidebar-toggle {
+    width: 38px;
+}
+
+/* Footer */
+
+.footer {
+    background-color: var(--color-sidebar);
+    padding: 20px 20px;
+    border-top: 1px solid var(--color-switch);
+    position: static;
+    margin-left: 150px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #c9c9c9;
+    transition: all 0.9s ease;
+}
+
+.footer-collapsed {
+    margin-left: 30px;
+}
+
+/* menu-user-dropdown */
+.d-flex .menu {
+    position: absolute;
+    top: 77px;
+    right: 24px;
+    background: var(--color-menu);
+    width: 200px;
+    border-radius: 15px;
+    transition: opacity 0.5s ease, background-color 0.9s ease;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.d-flex .menu.active {
+    visibility: visible;
+    opacity: 1;
+    z-index: 9999;
+}
+
+.d-flex .menu::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    right: 28px;
+    width: 20px;
+    height: 20px;
+    background: var(--color-menu);
+    transition: opacity 0.5s ease, background-color 0.9s ease;
+    transform: rotate(45deg);
+}
+
+.d-flex .menu ul li {
+    list-style: none;
+    padding: 16px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+}
+
+.d-flex .menu ul li img {
+    max-width: 20px;
+    margin-right: 10px;
+    opacity: 0.5;
+    transition: all 0.9s ease;
+}
+
+.d-flex .menu ul li:hover img {
+    opacity: 1;
+}
+
+.d-flex .menu ul li a {
+    display: inline-block;
+    text-decoration: none;
+    color: var(--color-text);
+    font-weight: 500;
+    transition: all 0.9s ease;
+}
+
+.d-flex .menu ul li i {
+    width: 25px;
+    font-size: 25px;
+    margin-right: 10px;
+    color: var(--color-text);
+    transition: all 0.9s ease;
+}
+
+.d-flex .menu ul li:hover a {
+    cursor: pointer;
+    color: #ff5d94;
+}

@@ -1,0 +1,91 @@
+<div class="main-body">
+    <div class="container container-profile ">
+        <div class="profile-header ">
+            <h2>Profile</h2>
+        </div>
+        <hr class="line">
+        <div class="profile-info ms-3">
+            <div class="row profile-info-span">
+                <div class="col-4"><strong>Name</strong></div>
+                <div class="col-8">{{ authService.studentProfile.userResponse.fullName }}</div>
+            </div>
+            <div class="row profile-info-span">
+                <div class="col-4"><strong>Date of Birth</strong></div>
+                <div class="col-8">{{ convertDateFormat(authService.studentProfile.userResponse.dob) }}</div>
+            </div>
+            <div class="row profile-info-span">
+                <div class="col-4"><strong>Gender</strong></div>
+                <div class="col-8">{{ authService.studentProfile.userResponse.gender == 1 ? 'Male' : 'Female' }}</div>
+            </div>
+            <div class="row profile-info-span">
+                <div class="col-4"><strong>Email</strong></div>
+                <div class="col-8">{{ authService.studentProfile.userResponse.email }}</div>
+            </div>
+            <div class="row profile-info-span">
+                <div class="col-4"><strong>Phone Number</strong></div>
+                <div class="col-8">{{ authService.studentProfile.userResponse.phoneNumber }}</div>
+            </div>
+            <div class="row profile-info-span" *ngIf="authService.studentProfile.classes">
+                <div class="col-4"><strong>Class</strong></div>
+                <div class="col-8">{{ authService.studentProfile.classes.name }}</div>
+            </div>
+            <div class="row profile-info-span">
+                <div class="col-4"><strong>Roll Portal</strong></div>
+                <div class="col-8">{{ authService.studentProfile.rollPortal }}</div>
+            </div>
+            <div class="row profile-info-span">
+                <div class="col-4"><strong>Roll Number</strong></div>
+                <div class="col-8">{{ authService.studentProfile.rollNumber }}</div>
+            </div>
+            <div class="profile-info-span" *ngIf="isChangePasswordButtonVisible" id="change-password">
+                <div class="row profile-info-span">
+                    <div class="col-4"><strong>Password</strong></div>
+                    <div class="col-8">
+                        <a (click)="showChangePasswordForm()">Change password</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form (submit)="changePassword()" class="change-password-form ms-3" [ngClass]="{'show': showPasswordChangeForm}">
+            <div class="mb-3">
+                <label for="currentPassword" class="form-label">Current Password</label>
+                <div class="d-flex form-control">
+                    <input type="password" name="currentPassword" [(ngModel)]="changePasswordForm.currentPassword" class="w-95 border-none"
+                        id="currentPassword" placeholder="Enter current password">
+                    <div class="toggle-password eye" id="togglecurrentPassword"
+                        (click)="visiblePassword('currentPassword', 'icon1')">
+                        <span id="icon1" class="mdi mdi-eye-off-outline"></span>
+                    </div>
+                </div>
+                <span class="text-danger error" *ngIf="formError['currentPassword']">{{ formError['currentPassword'] }}</span>
+            </div>
+            <div class="mb-3">
+                <label for="newPassword" class="form-label">New Password</label>
+                <div class="d-flex form-control">
+                    <input type="password" name="newPassword" [(ngModel)]="changePasswordForm.newPassword" class="w-95 border-none"
+                        id="newPassword" placeholder="Enter new password">
+                    <div class="toggle-newPassword eye" id="togglenewPassword"
+                        (click)="visiblePassword('newPassword', 'icon2')">
+                        <span id="icon2" class="mdi mdi-eye-off-outline"></span>
+                    </div>
+                </div>
+                <span class="text-danger error" *ngIf="formError['newPassword']">{{ formError['newPassword'] }}</span>
+            </div>
+            <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                <div class="d-flex form-control">
+                    <input type="password" name="confirmPassword" [(ngModel)]="changePasswordForm.confirmPassword" class="w-95 border-none"
+                        id="confirmPassword" placeholder="Confirm new password">
+                    <div class="toggle-confirmPassword eye" id="toggleconfirmPassword"
+                        (click)="visiblePassword('confirmPassword', 'icon3')">
+                        <span id="icon3" class="mdi mdi-eye-off-outline"></span>
+                    </div>
+                </div>
+                <span class="text-danger error" *ngIf="formError['confirmPassword']">{{ formError['confirmPassword'] }}</span>
+            </div>
+            <button type="submit" class="btn btn-danger btn-profile">Save</button>
+            <button type="button" class="btn btn-secondary btn-profile"
+                (click)="hideChangePasswordForm();">Cancel</button>
+        </form>
+    </div>
+</div>

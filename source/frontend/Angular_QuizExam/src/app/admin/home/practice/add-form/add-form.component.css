@@ -1,0 +1,309 @@
+/* Body */
+.content-wrapper {
+    padding: 80px 20px 60px 170px;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    transition: all 0.5s ease;
+}
+
+.content-wrapper-collapsed {
+    padding-left: 50px;
+}
+
+.line {
+    margin-top: 0;
+}
+
+#question-forms {
+    width: 100%;
+    margin-right: 50px;
+}
+
+.question-form {
+    border: 1px solid #dddddd8b;
+    padding: 10px;
+    margin-bottom: 30px;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+    /* Khoảng cách giữa các hàng */
+}
+
+.form-group-row {
+    display: flex;
+    align-items: center;
+    /* Căn chỉnh các phần tử theo chiều dọc */
+}
+
+.form-group-row label {
+    margin-right: 10px;
+}
+
+.form-group-row .label-fix {
+    min-width: 75px;
+}
+
+.form-group-row input,
+.form-group-row select {
+    flex: 1;
+    /* Để các input và select chiếm không gian còn lại */
+    height: calc(1.5em + 0.75rem + 2px);
+    /* Đảm bảo chiều cao của input và select giống như label */
+}
+
+.button-chapter {
+    white-space: nowrap; /* Ngăn không cho nội dung xuống dòng */
+    overflow: hidden; /* Ẩn nội dung vượt quá chiều rộng của nút */
+    text-overflow: ellipsis; /* Hiển thị "..." khi nội dung bị cắt */
+    display: inline-block; /* Để áp dụng các thuộc tính overflow */
+}
+
+.contentError {
+    margin-left: 85px;
+}
+
+.answersError {
+    margin-left: 35px;
+}
+
+.img-preview {
+    width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: auto;
+}
+
+.img-preview.hidden-border {
+    border: none; /* Ẩn border */
+}
+
+.img-preview input[type="file"] {
+    position: absolute;
+    opacity: 0;
+    z-index: 1;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+
+.img-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    display: none;
+}
+
+.remove-image {
+    position: absolute;
+    top: 5px; /* Điều chỉnh theo vị trí mong muốn */
+    right: 5px; /* Điều chỉnh theo vị trí mong muốn */
+    width: 20px;
+    height: 20px;
+    font-size: 13px;
+    text-align: center;
+    color: red;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    z-index: 10; /* Đảm bảo dấu X nằm trên các phần tử khác */
+}
+
+.choose-file-btn {
+    background-color: #aa1210;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px 20px;
+    cursor: pointer;
+    z-index: 0;
+    position: relative;
+}
+
+#imagePreview {
+    max-width: 100%;
+    max-height: 100%;
+    display: none;
+}
+
+.answers-container .input-group {
+    position: relative;
+}
+
+.answers-container .input-group .input-group-text {
+    background-color: unset;
+    border: none;
+    padding: 12px;
+}
+
+.answers-container .input-group input[type="text"] {
+    padding-right: 30px;
+    /* Để tạo không gian cho dấu X */
+}
+
+.answers-container .input-group .remove-answer {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 10px;
+    /* Tăng kích thước của dấu X */
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    cursor: pointer;
+    transform: scale(1.5);
+    /* Tăng kích thước của radio và checkbox */
+}
+
+.add-answer, .remove-question {
+    color: var(--color-text);
+    font-size: 16px;
+    border: none;
+    background-color: unset;
+    text-align: center;
+}
+
+.remove-question:hover {
+    color: red;
+}
+
+.icon-button {
+    font-size: 18px;
+}
+
+.btn-action {
+    position: fixed;
+    right: 20px;
+    width: 40px;
+    height: 115px;
+    border: 1px solid #dddddd8b;
+    text-align: center;
+}
+
+.btn-action .icon-action {
+    color: var(--color-text);
+    font-size: 24px;
+    background-color: unset;
+    border: none;
+    cursor: pointer;
+}
+
+
+/* Popup */
+.modal-backdrop, .modal-backdrop-confirm {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background-color: #fff;
+    border-radius: 8px;
+    width: 500px;
+    /* Tăng chiều rộng của modal */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid #ddd;
+    font-size: 18px;
+    /* Tăng kích thước font chữ */
+}
+
+.modal-header {
+    background-color: #aa1210;
+    border-radius: 10px 10px 0 0;
+    color: white;
+    padding: 15px;
+    /* Tăng kích thước padding cho header */
+    font-size: 20px;
+    /* Tăng kích thước font chữ của header */
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.close-icon {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 20px;
+    /* Tăng kích thước padding cho body */
+    font-size: 18px;
+    border-radius: 8px;
+    /* Tăng kích thước font chữ cho nội dung */
+    background-color: var(--color-background);
+}
+
+.form-chapter input[type="checkbox"] {
+    margin-right: 10px; /* Khoảng cách giữa checkbox và nhãn */
+}
+
+.form-chapter .checkbox-group {
+    margin-bottom: 20px; /* Khoảng cách dưới cùng */
+    width: 100%;
+}
+
+.form-chapter .checkbox-input {
+    margin-bottom: 10px; /* Khoảng cách giữa các dòng */
+}
+
+
+
+/* Popup confirm */
+.modal-content-confirm {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 500px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header-confirm {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 10px;
+}
+
+.modal-body-confirm {
+    padding: 20px 0;
+    font-size: 16px;
+}
+
+.modal-footer-confirm {
+    padding-top: 10px;
+    border-top: 1px solid #e9ecef;
+}
+
+.modal-footer-confirm .button {
+    font-size: 12px;
+    border: none;
+    border-radius: 6px;
+    margin-right: 5px;
+}
+
+.modal-footer-confirm .button-yes {
+    background-color: #aa1210;
+}

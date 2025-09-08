@@ -1,0 +1,29 @@
+<div class="body">
+    <div class="container " id="container">
+        <div class="sign-in">
+            <form (ngSubmit)="login()">
+                <h1>Sign In</h1>
+
+                <input type="email" [(ngModel)]="loginForm.email" name="email" placeholder="Email" required>
+                <small class="error" *ngIf="formError['email']">{{ formError['email'] }}</small>
+
+                <input type="password" [(ngModel)]="loginForm.password" name="password" placeholder="Password" required>
+                <small class="error" *ngIf="formError['password']">{{ formError['password'] }}</small>
+
+                <button type="submit" [disabled]="!this.loginForm.email?.trim() || !this.loginForm.password?.trim()">Sign In</button>
+            </form>
+            <div class="circle-sm-left"></div>
+        </div>
+        <div class="toogle-container">
+            <div class="toogle">
+                <div class="toogle-panel toogle-right">
+                    <h1>QuizTech</h1>
+                    <p>Welcome to Online Examination System</p>
+                </div>
+                <div class="circle-lg"></div>
+                <div class="circle-md"></div>
+                <div class="circle-sm"></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,91 @@
+.container-profile {
+    max-width: 50%;
+}
+
+.profile-info p {
+    font-size: 1.1rem;
+}
+
+.profile-info a {
+    color: dodgerblue;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.profile-info-span {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.profile-info-span .span {
+    display: inline-flex;
+    width: 150px;
+}
+
+.profile-info input {
+    border: none !important;
+    cursor: pointer;
+}
+
+.profile-text {
+    width: 500px;
+}
+
+.change-password-form {
+    height: 0;
+    overflow: hidden;
+    background-color: var(--color-change-password-form);
+    padding: 0 20px;
+    border-radius: 8px;
+    max-width: 90%;
+    transition: height 0.5s ease-out, padding 0.5s ease-out, background-color 0.9s ease;
+}
+
+.change-password-form.show {
+    height: 350px;
+    padding: 20px;
+}
+
+.change-password-form.error-active {
+    height: auto; /* Tăng chiều cao khi có lỗi để chứa thông báo lỗi */
+}
+
+.eye {
+    font-size: 19px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.w-95 {
+    width: 95%;
+}
+
+.border-none {
+    border: none;
+}
+
+input:focus,
+input:active {
+    border: none;
+}
+
+:focus-visible {
+    outline: -webkit-focus-ring-color auto 0px !important;
+}
+
+.btn-profile {
+    margin-right: 20px;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 750px) {
+    .profile-container {
+        width: 90%;
+        padding: 10px;
+    }
+
+    .profile-info p {
+        font-size: 1.1rem;
+    }
+}

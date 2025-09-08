@@ -1,0 +1,63 @@
+<div class="content-wrapper" [ngClass]="{'content-wrapper-collapsed': admin.isSidebarCollapsed}">
+    <h4>Update Questions for Exam</h4>
+    <hr class="line">
+
+    <div class="container add-question">
+        <div class="select-question mt-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="question-container">
+                        <h3 class="text-center">Question List</h3>
+                        <div class="d-flex justify-content-start align-items-center mb-4">
+                            <input type="text" class="form-control search-input" [(ngModel)]="searchQuestionList"
+                                placeholder="Search" />
+                        </div>
+                        <div *ngIf="filteredQuestionList.length > 0; else noListQuestions">
+                            <div *ngFor="let question of filteredQuestionList; let i = index" class="question-item">
+                                <span class="mdi mdi-plus-circle-outline icon" (click)="moveToSelectedQuestions(question)" style="cursor: pointer;" title="Add"></span>
+                                <span><strong>Question {{ i + 1 }}:</strong> {{ question.content }}</span>
+                            </div>
+                        </div>
+                        <ng-template #noListQuestions>
+                            <p>No questions found in List Question.</p>
+                        </ng-template>
+                    </div>
+                </div>
+    
+                <div class="col-md-6">
+                    <div class="question-container">
+                        <h3 class="text-center">Selected Questions</h3>
+                        <div class="d-flex justify-content-start mb-4">
+                            <input type="text" class="form-control search-input" [(ngModel)]="searchSelectedQuestions"
+                                placeholder="Search" />
+                        </div>
+                        <div *ngIf="filteredSelectedQuestions.length > 0; else noExamQuestions">
+                            <div *ngFor="let question of filteredSelectedQuestions; let i = index" class="question-item">
+                                <span class="mdi mdi-minus-circle-outline icon" (click)="moveToQuestionList(question)" style="cursor: pointer;" title="Remove"></span>
+                                <span><strong>Question {{ i + 1 }}:</strong> {{ question.content }}</span>
+                            </div>
+                        </div>
+                        <ng-template #noExamQuestions>
+                            <p>No questions found in Exam.</p>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="button text-center mt-3">
+            <a class="btn button-pdf me-3" (click)="openPopupBack()"><span class="mdi mdi-arrow-left-thick icon"></span>Back</a>
+            <a class="btn button-pdf" (click)="openPopupSave()">Save</a>
+        </div>
+    </div>
+</div>
+
+<!-- Popup xác nhận -->
+<app-dialog-popup
+  [isVisible]="isPopupSave || isPopupBack"
+  [title]="dialogTitle"
+  [message]="dialogMessage"
+  [isConfirmationPopup]="isConfirmationPopup"
+  (confirm)="confirmAction()"
+  (close)="closePopup()">
+</app-dialog-popup>

@@ -1,0 +1,152 @@
+<div class="content-wrapper" [ngClass]="{'content-wrapper-collapsed': admin.isSidebarCollapsed}">
+    <h4>Employee</h4>
+    <hr class="line">
+
+    <div class="bottom-actions">
+        <div>
+            <a class="button button-create" (click)="openPopupCreate()"><span class="mdi mdi-plus icon"></span>Create</a>
+        </div>
+        <div>
+            <a class="button button-excel" (click)="exportExcel()"><span class="mdi mdi-file-excel icon"></span>Export Excel</a>
+            <a class="button button-pdf" (click)="exportPDF()"><span class="mdi mdi-file-pdf icon"></span>Export PDF</a>
+        </div>
+    </div>
+
+    <table class="table" id="example">
+        <thead>
+            <tr>
+                <th style="width: 10%;">STT</th>
+                <th style="width: 30%;">Full Name</th>
+                <th style="width: 25%;">Email</th>
+                <th style="width: 15%;">Phone Number</th>
+                <th style="width: 10%;">Role</th>
+                <th style="width: 10%;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="isPopupDetail" class="popup-container">
+    <div class="popup-content" (click)="$event.stopPropagation()">
+        <div class="popup-header">
+            <span>Employee Detail</span>
+            <span class="close-icon" (click)="closePopup()">&times;</span>
+        </div>
+        <div class="popup-body">
+            <table class="popup-table">
+                <tr>
+                    <td><strong>ID</strong></td>
+                    <td>{{ employee.id }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Full Name</strong></td>
+                    <td>{{ employee.fullName }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Date of Birth</strong></td>
+                    <td>{{ convertDateFormat(employee.dob) }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Gender</strong></td>
+                    <td>{{ employee.gender == 1 ? "Male" : "Female" }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Email</strong></td>
+                    <td>{{ employee.email }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Phone Number</strong></td>
+                    <td>{{ employee.phoneNumber }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Address</strong></td>
+                    <td>{{ employee.address }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Role</strong></td>
+                    <td>{{ employee.role.name }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="popup-footer">
+        </div>
+    </div>
+</div>
+
+<div *ngIf="isPopupCreate || isPopupUpdate" class="popup-container">
+    <div class="popup-content popup-user" (click)="$event.stopPropagation()">
+        <form class="form-popup" (ngSubmit)="submitForm()">
+            <div class="popup-header">
+                <span>{{ popupFormTitle() }} Employee</span>
+                <span class="close-icon" (click)="closePopup()">&times;</span>
+            </div>
+            <div class="popup-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="fullName" class="label-popup">Full Name:</label>
+                            <input type="text" class="form-control" [(ngModel)]="employeeForm.fullName" name="fullName"
+                                placeholder="Enter Full Name">
+                            <span class="text-danger error" *ngIf="validationError['fullName']">{{ validationError['fullName'] }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="dob" class="label-popup">Date of Birth:</label>
+                            <input type="date" class="form-control" [(ngModel)]="employeeForm.dob" name="dob">
+                            <span class="text-danger error" *ngIf="validationError['dob']">{{ validationError['dob'] }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender" class="label-popup">Gender:</label>
+                            <select class="form-select" [(ngModel)]="employeeForm.gender" name="gender">
+                                <option value=1>Male</option>
+                                <option value=2>Female</option>
+                            </select>
+                            <span class="text-danger error" *ngIf="validationError['gender']">{{ validationError['gender'] }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="address" class="label-popup">Address:</label>
+                            <input type="text" class="form-control" [(ngModel)]="employeeForm.address" name="address"
+                                placeholder="Enter Address">
+                            <span class="text-danger error" *ngIf="validationError['address']">{{ validationError['address'] }}</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="phoneNumber" class="label-popup">Phone Number:</label>
+                            <input type="text" class="form-control" [(ngModel)]="employeeForm.phoneNumber" name="phoneNumber"
+                                placeholder="Enter Phone Number">
+                            <span class="text-danger error" *ngIf="validationError['phoneNumber']">{{ validationError['phoneNumber'] }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="label-popup">Email:</label>
+                            <input type="text" class="form-control" [(ngModel)]="employeeForm.email" name="email"
+                                placeholder="Enter Email">
+                            <span class="text-danger error" *ngIf="validationError['email']">{{ validationError['email'] }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="roleId" class="label-popup">Role:</label>
+                            <select class="form-select" [(ngModel)]="employeeForm.roleId" name="roleId">
+                                <option [value]="data.id" *ngFor="let data of roleList">{{data.name}}</option>
+                            </select>
+                            <span class="text-danger error" *ngIf="validationError['roleId']">{{ validationError['roleId'] }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="popup-footer">
+                <button type="submit" class="btn btn-primary button">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Popup xác nhận -->
+<app-dialog-popup
+  [isVisible]="isPopupResetPassword || isPopupRemove || isPopupViewInactive || isPopupRestore"
+  [title]="dialogTitle"
+  [message]="dialogMessage"
+  [isConfirmationPopup]="isConfirmationPopup"
+  (confirm)="confirmAction()"
+  (close)="closePopup()">
+</app-dialog-popup>
