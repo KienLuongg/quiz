@@ -51,7 +51,7 @@ check_docker() {
 check_ports() {
     print_status "Checking if required ports are available..."
     
-    ports=(80 3010 8080)
+    ports=(80 8080)
     for port in "${ports[@]}"; do
         if lsof -Pi :$port -sTCP:LISTEN -t >/dev/null 2>&1; then
             print_warning "Port $port is already in use. Please stop the service using this port or change the port in docker-compose.yml"
@@ -88,10 +88,8 @@ deploy_services() {
 wait_for_services() {
     print_status "Waiting for services to be healthy..."
     
-    # Wait for MySQL
-    print_status "Waiting for MySQL to be ready..."
-    timeout 60 bash -c 'until docker-compose exec mysql mysqladmin ping -h localhost --silent; do sleep 2; done'
-    print_success "MySQL is ready"
+    # MySQL is external, skip health check
+    print_status "Using external MySQL database at 103.229.42.113:3306"
     
     # Wait for Backend
     print_status "Waiting for Backend to be ready..."
@@ -115,7 +113,7 @@ show_status() {
     echo "📋 Access URLs:"
     echo "   Frontend: http://localhost"
     echo "   Backend API: http://localhost:8080"
-    echo "   MySQL: localhost:3010"
+    echo "   MySQL: 103.229.42.113:3306 (external)"
     echo ""
     echo "📊 Useful Commands:"
     echo "   View logs: docker-compose logs -f"
