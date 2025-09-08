@@ -25,9 +25,9 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # Copy built application from build stage
 COPY --from=build /app/dist/angular-quiz-exam/browser /usr/share/nginx/html
 
-# Create nginx user and set permissions
-RUN addgroup -g 1001 -S nginx && \
-    adduser -S -D -H -u 1001 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx
+# Set proper permissions for nginx
+RUN chown -R nginx:nginx /usr/share/nginx/html && \
+    chmod -R 755 /usr/share/nginx/html
 
 # Expose port
 EXPOSE 80
