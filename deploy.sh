@@ -51,7 +51,7 @@ check_docker() {
 check_ports() {
     print_status "Checking if required ports are available..."
     
-    ports=(80 3306 8080)
+    ports=(80 3307 8080)
     for port in "${ports[@]}"; do
         if lsof -Pi :$port -sTCP:LISTEN -t >/dev/null 2>&1; then
             print_warning "Port $port is already in use. Please stop the service using this port or change the port in docker-compose.yml"
@@ -115,7 +115,7 @@ show_status() {
     echo "📋 Access URLs:"
     echo "   Frontend: http://localhost"
     echo "   Backend API: http://localhost:8080"
-    echo "   MySQL: localhost:3306"
+    echo "   MySQL: localhost:3307"
     echo ""
     echo "📊 Useful Commands:"
     echo "   View logs: docker-compose logs -f"
